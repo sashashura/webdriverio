@@ -84,7 +84,7 @@ export default class Auditor {
      * Returns a list with a breakdown of all main thread task and their total duration
      */
     async getMainThreadWorkBreakdown () {
-        const result = await this._audit(MainThreadWorkBreakdown) as MainThreadWorkBreakdownResult
+        const result = await this._audit(MainThreadWorkBreakdown as any) as MainThreadWorkBreakdownResult
         return result.details.items.map(
             ({ group, duration }) => ({ group, duration })
         )
@@ -94,7 +94,7 @@ export default class Auditor {
      * Get some useful diagnostics about the page load
      */
     async getDiagnostics () {
-        const result = await this._audit(Diagnostics) as DiagnosticsResults
+        const result = await this._audit(Diagnostics as any) as DiagnosticsResults
 
         /**
          * return null if Audit fails
@@ -110,9 +110,9 @@ export default class Auditor {
      * Get most common used performance metrics
      */
     async getMetrics () {
-        const serverResponseTime = await this._audit(ServerResponseTime, { URL: this._url }) as ResponseTimeResult
-        const cumulativeLayoutShift = await this._audit(CumulativeLayoutShift) as ResponseTimeResult
-        const result = await this._audit(Metrics) as MetricsResults
+        const serverResponseTime = await this._audit(ServerResponseTime as any, { URL: this._url }) as ResponseTimeResult
+        const cumulativeLayoutShift = await this._audit(CumulativeLayoutShift as any) as ResponseTimeResult
+        const result = await this._audit(Metrics as any) as MetricsResults
         const metrics = result.details.items[0] || {}
         return {
             timeToFirstByte: Math.round(serverResponseTime.numericValue),
@@ -138,12 +138,12 @@ export default class Auditor {
      */
     async getPerformanceScore () {
         const auditResults: AuditResults = {
-            'speed-index': await this._audit(SpeedIndex) as MetricsResult,
-            'first-contentful-paint': await this._audit(FirstContentfulPaint) as MetricsResult,
-            'largest-contentful-paint': await this._audit(LargestContentfulPaint) as MetricsResult,
-            'cumulative-layout-shift': await this._audit(CumulativeLayoutShift) as MetricsResult,
-            'total-blocking-time': await this._audit(TotalBlockingTime) as MetricsResult,
-            interactive: await this._audit(InteractiveMetric) as MetricsResult
+            'speed-index': await this._audit(SpeedIndex as any) as MetricsResult,
+            'first-contentful-paint': await this._audit(FirstContentfulPaint as any) as MetricsResult,
+            'largest-contentful-paint': await this._audit(LargestContentfulPaint as any) as MetricsResult,
+            'cumulative-layout-shift': await this._audit(CumulativeLayoutShift as any) as MetricsResult,
+            'total-blocking-time': await this._audit(TotalBlockingTime as any) as MetricsResult,
+            interactive: await this._audit(InteractiveMetric as any) as MetricsResult
         }
 
         if (!auditResults.interactive || !auditResults['cumulative-layout-shift'] || !auditResults['first-contentful-paint'] ||
@@ -152,7 +152,7 @@ export default class Auditor {
             return null
         }
 
-        const scores = defaultConfig.categories.performance.auditRefs.filter((auditRef: AuditRef) => auditRef.weight).map((auditRef: AuditRef) => ({
+        const scores = (defaultConfig as any).categories.performance.auditRefs.filter((auditRef: AuditRef) => auditRef.weight).map((auditRef: AuditRef) => ({
             score: auditResults[auditRef.id].score,
             weight: auditRef.weight,
         }))
@@ -167,7 +167,7 @@ export default class Auditor {
             Object.entries(PWA_AUDITS)
                 .filter(([name]) => auditsToBeRun.includes(name as PWAAudits))
                 .map<Promise<RunAuditResult>>(
-                    async ([name, Audit]) => [name, await this._audit(Audit, params)]
+                    async ([name, Audit]) => [name, await this._audit(Audit as any, params)]
                 )
         )
         return {

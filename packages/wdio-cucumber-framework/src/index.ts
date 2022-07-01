@@ -265,7 +265,7 @@ class CucumberAdapter {
      * set `beforeFeature`, `afterFeature`, `beforeScenario`, `afterScenario`, 'beforeStep', 'afterStep'
      * @param {object} config config
      */
-    addWdioHooks(config: Options.Testrunner) {
+    addWdioHooks(config: Options.Testrunner & HookFunctionExtensionImport) {
         const eventListener = this._cucumberReporter?.eventListener
         Cucumber.BeforeAll(async function wdioHookBeforeFeature() {
             const params = eventListener?.getHookParams()

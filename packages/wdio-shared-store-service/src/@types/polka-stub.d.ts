@@ -1,12 +1,12 @@
 // stub
 // polka doesn't have up to date types
 // and the project is not maintained for 2 years
-
-declare module '@polka/parse';
+declare module '@polka/parse' {
+    export function json (): any
+};
 
 declare module 'polka' {
-    function polka(): PolkaInstance;
-    export = polka;
+    export default function polka(): PolkaInstance;
 }
 
 type PolkaRequest = {

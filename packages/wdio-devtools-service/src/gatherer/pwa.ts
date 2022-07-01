@@ -25,12 +25,12 @@ export default class PWAGatherer {
         private _page: Page,
         private _driver: GathererDriver
     ) {
-        this._frGatherer = new FRGatherer(this._session)
+        this._frGatherer = new (FRGatherer as any)(this._session)
 
         /**
          * setup network recorder
          */
-        this._networkRecorder = new NetworkRecorder()
+        this._networkRecorder = new (NetworkRecorder as any)()
         NETWORK_RECORDER_EVENTS.forEach((method) => {
             this._session.on(method, (params) => this._networkRecorder.dispatch({ method, params }))
         })
@@ -41,7 +41,7 @@ export default class PWAGatherer {
         this._page.on('load', () => {
             this._networkRecords = this._networkRecorder.getRawRecords()
             delete this._networkRecorder
-            this._networkRecorder = new NetworkRecorder()
+            this._networkRecorder = new (NetworkRecorder as any)()
         })
     }
 
@@ -55,18 +55,18 @@ export default class PWAGatherer {
             networkRecords: this._networkRecords
         }
 
-        const linkElements = new LinkElements()
-        const viewportDimensions = new ViewportDimensions()
-        const { registrations } = await serviceWorkers.getServiceWorkerRegistrations(this._frGatherer)
-        const { versions } = await serviceWorkers.getServiceWorkerVersions(this._frGatherer)
+        const linkElements = new (LinkElements as any)()
+        const viewportDimensions = new (ViewportDimensions as any)()
+        const { registrations } = await (serviceWorkers as any).getServiceWorkerRegistrations(this._frGatherer)
+        const { versions } = await (serviceWorkers as any).getServiceWorkerVersions(this._frGatherer)
         return {
             URL: { requestedUrl: pageUrl, finalUrl: pageUrl },
-            WebAppManifest: await WebAppManifest.getWebAppManifest(this._frGatherer, pageUrl),
-            InstallabilityErrors: await InstallabilityErrors.getInstallabilityErrors(this._frGatherer),
+            WebAppManifest: await (WebAppManifest as any).getWebAppManifest(this._frGatherer, pageUrl),
+            InstallabilityErrors: await (InstallabilityErrors as any).getInstallabilityErrors(this._frGatherer),
             MetaElements: await this._driver.evaluate(collectMetaElements, {
                 args: [],
                 useIsolation: true,
-                deps: [pageFunctions.getElementsInDocument],
+                deps: [(pageFunctions as any).getElementsInDocument],
             }),
             ViewportDimensions: await viewportDimensions.afterPass(passContext),
             ServiceWorker: { versions, registrations },

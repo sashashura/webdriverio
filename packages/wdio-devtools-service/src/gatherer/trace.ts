@@ -59,7 +59,7 @@ export default class TraceGatherer extends EventEmitter {
     private _frameId?: string
     private _loaderId?: string
     private _pageUrl?: string
-    private _networkStatusMonitor: typeof NetworkRecorder
+    private _networkStatusMonitor: any
     private _networkMonitor: typeof NetworkMonitor
     private _protocolSession: typeof  ProtocolSession
     private _trace?: Trace
@@ -74,8 +74,8 @@ export default class TraceGatherer extends EventEmitter {
             this._networkListeners[method] = (params) => this._networkStatusMonitor.dispatch({ method, params })
         })
 
-        this._protocolSession = new ProtocolSession(_session)
-        this._networkMonitor = new NetworkMonitor(_session)
+        this._protocolSession = new (ProtocolSession as any)(_session)
+        this._networkMonitor = new (NetworkMonitor as any)(_session)
     }
 
     async startTracing (url: string) {
@@ -87,7 +87,7 @@ export default class TraceGatherer extends EventEmitter {
         /**
          * register listener for network status monitoring
          */
-        this._networkStatusMonitor = new NetworkRecorder()
+        this._networkStatusMonitor = new (NetworkRecorder as any)()
         NETWORK_RECORDER_EVENTS.forEach((method) => {
             this._session.on(method, this._networkListeners[method])
         })

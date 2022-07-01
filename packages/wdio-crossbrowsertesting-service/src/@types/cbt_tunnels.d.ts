@@ -1,15 +1,10 @@
 declare module 'cbt_tunnels' {
-    const cbt: CBTTunnelInterface;
-    export default cbt;
-}
+    export interface CBTConfigInterface {
+        username?: string,
+        authkey?: string,
+        nokill?: boolean,
+    }
 
-interface CBTTunnelInterface {
-    start: (config: CBTConfigInterface, callback: (err: Error | null) => void) => void;
-    stop: (callback: Function) => void;
-}
-
-interface CBTConfigInterface {
-    username?: string,
-    authkey?: string,
-    nokill?: boolean,
+    export function start (config: CBTConfigInterface, callback: (err: Error | null) => void): void
+    export function stop (callback: Function): void
 }

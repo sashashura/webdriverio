@@ -1,5 +1,7 @@
 declare module 'testingbot-tunnel-launcher' {
-    const testingbotTunnel: (options: TunnelLauncherOptions, cb: (err: Error, tunnel: TestingbotTunnel) => void) => void;
-    export default testingbotTunnel;
+    export default function TestingBotTunnelLauncher (
+        options: import("../types").TunnelLauncherOptions,
+        cb: (err: Error, tunnel: import("../types").TestingbotTunnel) => void
+    ): void
 }
 

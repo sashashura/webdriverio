@@ -1,1 +1,3 @@
-declare module 'babel-plugin-istanbul'
+declare module 'babel-plugin-istanbul' {
+    export default function BabelPluginIstanbul (): any
+}

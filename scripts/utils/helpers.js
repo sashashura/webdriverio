@@ -2,14 +2,14 @@ import path from 'node:path'
 import url from 'node:url'
 import shell from 'shelljs'
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+const dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 /**
  * fetch all sub package names from the package directory
  * @param   {string[]} ignorePackages  a list of packages to be ignored
  * @returns {string[]}                 a list of sub packages
  */
-export const getSubPackages = (ignorePackages = []) => shell.ls(path.join(__dirname, '..', '..', 'packages')).filter((pkg) => (
+export const getSubPackages = (ignorePackages = []) => shell.ls(path.join(dirname, '..', '..', 'packages')).filter((pkg) => (
     /**
      * ignore node_modules directory that is created by the link script to test the
      * wdio test runner

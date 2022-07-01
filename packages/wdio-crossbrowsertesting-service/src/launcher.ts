@@ -2,7 +2,7 @@ import { promisify } from 'node:util'
 import { performance, PerformanceObserver } from 'node:perf_hooks'
 import type { Capabilities, Services, Options } from '@wdio/types'
 
-import cbt from 'cbt_tunnels'
+import cbt, { CBTConfigInterface } from 'cbt_tunnels'
 import logger from '@wdio/logger'
 
 import type { CrossBrowserTestingConfig } from './types'

@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import { createRequire } from 'node:module'
 
 import type { ElementReference } from '@wdio/protocols'
@@ -8,7 +8,7 @@ import { waitToLoadReact, react$ as react$Script } from '../../scripts/resq.js'
 import type { ReactSelectorOptions } from '../../types'
 
 const require = createRequire(import.meta.url)
-const resqScript = await fs.readFile(require.resolve('resq'))
+const resqScript = fs.readFileSync(require.resolve('resq')).toString()
 
 /**
  *
@@ -58,7 +58,7 @@ export default async function react$ (
     selector: string,
     { props = {}, state = {} }: ReactSelectorOptions = {}
 ) {
-    await this.executeScript(resqScript.toString(), [])
+    await this.executeScript(resqScript, [])
     await this.execute(waitToLoadReact)
     const res = await this.execute(
         react$Script as any, selector, props, state
