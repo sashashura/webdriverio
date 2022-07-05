@@ -18,7 +18,11 @@ export const getSubPackages = (ignorePackages = []) => shell.ls(path.join(dirnam
     /**
      * ignore packages that don't need to be compiled
      */
-    !ignorePackages.includes(pkg)
+    !ignorePackages.includes(pkg) &&
+    /**
+     * any files we use for testing
+     */
+    !pkg.includes('.')
 ))
 
 export function buildPreface(id, title, titleSuffix, editUrl) {

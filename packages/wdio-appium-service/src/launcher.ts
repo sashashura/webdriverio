@@ -2,6 +2,7 @@ import { ChildProcessByStdio, spawn } from 'node:child_process'
 import { promisify } from 'node:util'
 import { Readable } from 'node:stream'
 import { createRequire } from 'node:module'
+import fs from 'fs-extra'
 
 import logger from '@wdio/logger'
 import { isCloudCapability } from '@wdio/config'
@@ -21,11 +22,6 @@ const DEFAULT_CONNECTION = {
 }
 
 const require = createRequire(import.meta.url)
-/**
- * 'fs-extra' has no support for ESM
- * https://github.com/jprichardson/node-fs-extra/issues/746
- */
-const { createWriteStream, ensureFileSync } = require('fs-extra')
 
 export default class AppiumLauncher implements Services.ServiceInstance {
     private readonly _logPath?: string
@@ -160,10 +156,10 @@ export default class AppiumLauncher implements Services.ServiceInstance {
         const logFile = getFilePath(logPath, DEFAULT_LOG_FILENAME)
 
         // ensure file & directory exists
-        ensureFileSync(logFile)
+        fs.ensureFileSync(logFile)
 
         log.debug(`Appium logs written to: ${logFile}`)
-        const logStream = createWriteStream(logFile, { flags: 'w' })
+        const logStream = fs.createWriteStream(logFile, { flags: 'w' })
         this._process.stdout.pipe(logStream)
         this._process.stderr.pipe(logStream)
     }

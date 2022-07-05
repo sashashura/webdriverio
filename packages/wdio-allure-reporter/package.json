@@ -18,16 +18,16 @@
   "bugs": {
     "url": "https://github.com/webdriverio/webdriverio/issues"
   },
-  "main": "./build/index.cjs.js",
+  "main": "./cjs/index.js",
   "type": "module",
   "module": "./build/index.js",
   "exports": {
     ".": [
       {
         "import": "./build/index.js",
-        "require": "./build/index.cjs.js"
+        "require": "./cjs/index.js"
       },
-      "./build/index.cjs.js"
+      "./cjs/index.js"
     ]
   },
   "types": "./build/index.d.ts",
@@ -36,8 +36,8 @@
      "node": "^16.13 || >=18"
   },
   "dependencies": {
-    "@wdio/reporter": "7.19.7",
-    "@wdio/types": "7.19.5",
+    "@wdio/reporter": "7.20.3",
+    "@wdio/types": "7.20.3",
     "allure-js-commons": "^1.3.2",
     "csv-stringify": "^6.0.4",
     "strip-ansi": "^6.0.0"

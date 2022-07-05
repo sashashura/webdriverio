@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { createRequire } from 'node:module'
 import { EventEmitter } from 'node:events'
 
 import mockery from 'mockery'
@@ -30,6 +29,7 @@ import { ITestCaseHookParameter } from '@cucumber/cucumber/lib/support_code_libr
 import { IRuntimeOptions } from '@cucumber/cucumber/lib/runtime'
 import { Long } from 'long'
 import { IdGenerator } from '@cucumber/messages'
+import EventDataCollector from '@cucumber/cucumber/lib/formatter/helpers/event_data_collector.js'
 
 import { executeHooksWithArgs, testFnWrapper } from '@wdio/utils'
 import { setOptions } from 'expect-webdriverio'
@@ -40,9 +40,6 @@ import CucumberReporter from './reporter.js'
 import { DEFAULT_OPTS } from './constants.js'
 import { setUserHookNames } from './utils.js'
 import type { CucumberOptions, StepDefinitionOptions, HookFunctionExtension as HookFunctionExtensionImport } from './types'
-
-const require = createRequire(import.meta.url)
-const EventDataCollector = require('@cucumber/cucumber/lib/formatter/helpers/event_data_collector').default
 
 const { incrementing } = IdGenerator
 
@@ -62,7 +59,7 @@ class CucumberAdapter {
     private _cucumberFeaturesWithLineNumbers: string[]
     private _eventBroadcaster: EventEmitter
     private _cucumberReporter: CucumberReporter
-    private _eventDataCollector: typeof EventDataCollector
+    private _eventDataCollector: EventDataCollector
     private _pickleFilter: Cucumber.PickleFilter
 
     getHookParams?: Function

@@ -64,12 +64,14 @@ tests/typings/**/dist
 .changelog
 
 **/build
+**/cjs
+**/esm
 /*.js
 /*.ts
 devtools.d.ts
 !.eslintrc.js
 !vitest.config.ts
-!tsup.config.ts
+!build.config.ts
 packages/**/package-lock.json
 .DS_Store
 

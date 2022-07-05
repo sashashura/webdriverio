@@ -12,7 +12,7 @@ import type { Browser } from 'puppeteer-core/lib/cjs/puppeteer/common/Browser'
 
 import DevToolsDriver from './devtoolsdriver.js'
 import launch from './launcher.js'
-import { DEFAULTS, SUPPORTED_BROWSER, VENDOR_PREFIX } from './constants.js'
+import { DEFAULTS, SUPPORTED_BROWSER, VENDOR_PREFIX, sessionMap } from './constants.js'
 import { getPrototype, patchDebug } from './utils.js'
 import type {
     Client,
@@ -27,8 +27,6 @@ const log = logger('devtools:puppeteer')
  * patch debug package to log Puppeteer CDP messages
  */
 patchDebug(log)
-
-export const sessionMap = new Map()
 
 export default class DevTools {
     static async newSession (

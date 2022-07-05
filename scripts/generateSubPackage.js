@@ -67,16 +67,16 @@ const mainPackageFolderFiles = [{
   "author": "<your-name> <your@email.com>",
   "homepage": "https://github.com/webdriverio/webdriverio/tree/main/packages/${fullPackageName}",
   "license": "MIT",
-  "main": "./build/index.cjs.js",
+  "main": "./cjs/index.js",
   "type": "module",
   "module": "./build/index.js",
   "exports": {
     ".": [
       {
         "import": "./build/index.js",
-        "require": "./build/index.cjs.js"
+        "require": "./cjs/index.js"
       },
-      "./build/index.cjs.js"
+      "./cjs/index.js"
     ]
   },
   "types": "./build/index.d.ts",

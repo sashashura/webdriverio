@@ -2,7 +2,7 @@ import os from 'node:os'
 import { v4 as uuidv4 } from 'uuid'
 
 import launch from '../launcher.js'
-import { sessionMap } from '../index.js'
+import { sessionMap } from '../constants.js'
 import type { ExtendedCapabilities } from '../types'
 import type DevToolsDriver from '../devtoolsdriver'
 

@@ -5,23 +5,16 @@
   "author": "Christian Bromann <mail@bromann.dev>",
   "homepage": "https://github.com/webdriverio/webdriverio/tree/main/packages/wdio-logger",
   "license": "MIT",
-  "main": "./build/index.cjs.js",
+  "main": "./cjs/index.cjs.js",
   "type": "module",
-  "module": "./build/index.js",
+  "module": "./build/node.js",
   "exports": {
     ".": [
       {
-        "import": "./build/index.js",
-        "require": "./build/index.cjs.js"
-      },
-      "./build/index.cjs.js"
-    ],
-    "./node": [
-      {
         "import": "./build/node.js",
-        "require": "./build/node.cjs.js"
+        "require": "./cjs/index.cjs.js"
       },
-      "./build/node.cjs.js"
+      "./cjs/index.cjs.js"
     ]
   },
   "types": "./build/index.d.ts",
